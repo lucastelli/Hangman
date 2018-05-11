@@ -17,6 +17,7 @@ public class ClientPlayer {
     private BufferedReader in;
     private boolean inGame;
     private BufferedReader console;
+    private int state;
 
     public ClientPlayer(InetAddress hostName, int port) throws IOException{
         this.port = port;
@@ -26,12 +27,40 @@ public class ClientPlayer {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         console = new BufferedReader(new InputStreamReader(System.in));
         inGame = true;
+        state = 0;
     }
 
     public void playGame() throws IOException{
         while(inGame){
-            out.println(chooseLetter());
-            update(in.readLine().split(" "));
+            String stringaIn = "";
+            switch(state){
+                case 0:
+                        state = 10;
+                        break;
+                case 10: stringaIn = in.readLine();
+                        if(stringaIn.split(" ")[0].equals("open")){
+                            state = 20;
+                        } else{
+                            state = 40;
+                        }
+                        break;
+                case 20: update(stringaIn.split(" "));
+                        state = 30;
+                        break;
+                case 30: out.println(chooseLetter());
+                        state = 10;
+                        break;
+                case 40: if(stringaIn.split(" ")[0].equals("failed")){
+                            printBanner("Hai perso!  La parola da indovinare era '" +
+                                    stringaIn.split(" ")[1] + "'");
+                        }else{
+                            printBanner("Hai indovinato!   (" + stringaIn.split(" ")[1] + ")");
+                        }
+                        state = 0;
+                         break;
+            }
+
+
         }
     }
 
