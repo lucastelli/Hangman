@@ -1,8 +1,5 @@
 package console;
 
-import hangman.Game;
-import hangman.Player;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,36 +28,17 @@ public class ClientPlayer {
     }
 
     public void playGame() throws IOException{
+        String[] stringaIn = {"","","",""};
         while(inGame){
-            String stringaIn = "";
             switch(state){
-                case 0:
+                case 0: stringaIn = in.readLine().split(" ");
+                        update(stringaIn);
                         state = 10;
                         break;
-                case 10: stringaIn = in.readLine();
-                        if(stringaIn.split(" ")[0].equals("open")){
-                            state = 20;
-                        } else{
-                            state = 40;
-                        }
-                        break;
-                case 20: update(stringaIn.split(" "));
-                        state = 30;
-                        break;
-                case 30: out.println(chooseLetter());
-                        state = 10;
-                        break;
-                case 40: if(stringaIn.split(" ")[0].equals("failed")){
-                            printBanner("Hai perso!  La parola da indovinare era '" +
-                                    stringaIn.split(" ")[1] + "'");
-                        }else{
-                            printBanner("Hai indovinato!   (" + stringaIn.split(" ")[1] + ")");
-                        }
+                case 10: out.println(chooseLetter());
                         state = 0;
-                         break;
+                        break;
             }
-
-
         }
     }
 
@@ -77,7 +55,7 @@ public class ClientPlayer {
                 break;
             case "open":
                 System.out.print("\n" + dataAcq[1] + " tentativi rimasti\n");
-                System.out.println(this.gameRepresentation(Integer.getInteger(dataAcq[2])));
+                System.out.println(this.gameRepresentation(Integer.parseInt(dataAcq[2])));
                 System.out.println(dataAcq[3]);
                 break;
         }

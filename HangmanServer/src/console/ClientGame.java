@@ -7,7 +7,7 @@ import java.net.InetAddress;
 public class ClientGame {
     public static void main(String[] args){
         try{
-            ClientPlayer clientPlayer = new ClientPlayer(InetAddress.getByName("127.20.10.2"),8888);
+            ClientPlayer clientPlayer = new ClientPlayer(InetAddress.getByName("172.20.10.2"),8888);
             clientPlayer.playGame();
 
         }catch(IOException e){
