@@ -1,7 +1,6 @@
 package console;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 
 public class ClientGame {
