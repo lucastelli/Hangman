@@ -24,6 +24,7 @@ public class HangmanServer {
         try{
             Player player = new ServerPlayer(8888);
             Hangman game = new Hangman();
+            System.out.println("Server aperto...");
             game.playGame(player);
         }catch(IOException e){
             System.out.println(e.getMessage());
